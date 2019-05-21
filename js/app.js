@@ -26,6 +26,7 @@ function initGame() {
     allCards = document.getElementsByClassName("card")
     cardList = []
     document.querySelector(".moves").innerHTML = "0"
+    document.querySelector(".moves").insertAdjacentText("beforeend", " Move")
 
     /**
      * Set the cards click event
@@ -65,7 +66,6 @@ function initGame() {
              */
             self.classList.add('open', 'show');
 
-            setMoves()
             /**
              * When we have two cards, compare the results
              */
@@ -91,6 +91,7 @@ function initGame() {
                     self.cardList[0].addEventListener('click', self.showCard)
                     self.cardList[1].addEventListener('click', self.showCard)
                 }
+                setMoves()
                 cardList = []
             }
         })
@@ -104,7 +105,7 @@ document.querySelector('.restart').addEventListener('click', () => {
     initGame()
 })
 
-/*
+/**
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
@@ -142,6 +143,9 @@ function initCards() {
     document.querySelector('.deck').innerHTML = deck.join('')
 }
 
+/**
+ * Update the moves value
+ */
 function setMoves() {
     const me = document.querySelector(".moves");
     let move = parseInt(me.textContent);
@@ -150,11 +154,16 @@ function setMoves() {
     me.insertAdjacentText("beforeend", move == 1 ? " Move" : " Moves")
 }
 
+/**
+ * Set the total of matches
+ */
 function setStars() {
     document.querySelector(".stars").innerHTML = `<li><i class="fa fa-star"></i></li>`;
 }
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+/**
+ * Shuffle function from http://stackoverflow.com/a/2450976
+ */
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
