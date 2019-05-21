@@ -107,3 +107,32 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: calc(50% - (130px / 2));
+    left: calc(50% - (320px / 2));
+    width: 320px;
+    height: 130px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: #2e3d49;
+    text-align: center;
+    z-index: 200;
+    display: none;
+}
+.modal p {
+    cursor: pointer;
+}
