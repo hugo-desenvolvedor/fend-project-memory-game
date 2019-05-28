@@ -1,20 +1,11 @@
 # Memory Game Project
-
 ## Table of Contents
-
-* [Instructions](#instructions)
-* [Contributing](#contributing)
-
-## Instructions
-
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+* [About](#about)
+* [How to play](#how-to-play)
+## About
+Memory game developed in Javascript, with mouse and keyboard events.
+This is a part of the [Udacity FrontEnd Developer Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001) 
+## How to play
+Use the mouse or another pointer device to make a move, or optionally, 
+you can use the `"TAB"` key to move to right, `"SHIFT + TAB"` to move to left, 
+and `"Enter"` to show a card.

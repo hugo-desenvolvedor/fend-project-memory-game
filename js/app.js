@@ -18,78 +18,22 @@ function initGame() {
      * Set the cards click event
      */
     for (const card of allCards) {
-        card.addEventListener('click', function showCard() {
-            /**
-             * Set the self variables. It is important when we need to use some vars inside other contexts
-             * @type {showCard}
-             */
+        card.addEventListener('keypress', function showCard (e) {
+            const key = event.key || event.keyCode
             const self = this
 
-            /**
-             * Save the card list instance to use in another context
-             * @type {Array}
-             */
-            self.cardList = cardList
-
-            /**
-             * Save the funcion instance to use in another context
-             * @type {showCard}
-             */
-            self.showCard = showCard
-
-            /**
-             * Remove the click event from this card
-             */
-            self.removeEventListener('click', showCard)
-
-            /**
-             * Save the actual event instance
-             */
-            self.cardList.push(self)
-
-            /**
-             * Show the card
-             */
-            self.classList.add('open', 'show');
-
-            /**
-             * When we have two cards, compare the results
-             */
-            if (self.cardList.length == 2) {
-                if (self.cardList[0].dataset.value == cardList[1].dataset.value) {
-                    /**
-                     * If the results match, maintains the card opened
-                     */
-                    self.cardList[0].classList.add('match')
-                    self.cardList[1].classList.add('match')
-                    setStars()
-
-                    /**
-                     * Show the modal
-                     */
-                    matches++
-                    if (matches == 8) {
-                        document.querySelector(".overlay").style.display = "block"
-                        document.querySelector(".modal").style.display = "block"
-                    }
-                } else {
-                    /**
-                     * If the results don't match, hide the card
-                     */
-                    setTimeout(function () {
-                        self.cardList[0].classList.remove('open', 'show')
-                        self.cardList[1].classList.remove('open', 'show')
-                    }, 1000)
-
-                    /**
-                     * Set the event listener previously removed
-                     */
-                    self.cardList[0].addEventListener('click', self.showCard)
-                    self.cardList[1].addEventListener('click', self.showCard)
-                }
-                setMoves()
-                cardList = []
+            if (key == 13 || key == 'Enter') {
+                self.showCard = showCard
+                self.event = 'keypress'
+                makeMove(self)
             }
+        });
+
+        card.addEventListener('click', function showCard() {
+            const self = this
+            self.showCard = showCard
+            self.event = 'click'
+            makeMove(self)
         })
     }
 }
@@ -140,8 +84,10 @@ function initCards() {
      * @type {Array}
      */
     const deck = []
+    let i = 0
     for (const card of cards) {
-        deck.push(`<li class="card" data-value="${card}"><i class="fa ${card}"></i></li>`)
+        i++
+        deck.push(`<li class="card" data-value="${card}" tabindex="${i}"><i class="fa ${card}"></i></li>`)
     }
     document.querySelector('.deck').innerHTML = deck.join('')
 }
@@ -161,8 +107,66 @@ function setMoves() {
  * Set one star for each match
  */
 function setStars() {
-    console.log('setting stars');
     document.querySelector(".stars").insertAdjacentHTML("beforeend", `<li><i class="fa fa-star"></i></li>`)
+}
+
+function makeMove(self) {
+    self.removeEventListener(self.event, self.showCard)
+    self.cardList = cardList
+
+    /**
+     * Save the function instance to use in another context
+     * @type {showCard}
+     */
+
+    /**
+     * Save the actual event instance
+     */
+    self.cardList.push(self)
+
+    /**
+     * Show the card
+     */
+    self.classList.add('open', 'show');
+
+    /**
+     * When we have two cards, compare the results
+     */
+    if (self.cardList.length == 2) {
+        if (self.cardList[0].dataset.value == cardList[1].dataset.value) {
+            /**
+             * If the results match, maintains the card opened
+             */
+            self.cardList[0].classList.add('match')
+            self.cardList[1].classList.add('match')
+            setStars()
+
+            /**
+             * Show the modal
+             */
+            matches++
+            if (matches == 8) {
+                document.querySelector(".overlay").style.display = "block"
+                document.querySelector(".modal").style.display = "block"
+            }
+        } else {
+            /**
+             * If the results don't match, hide the card
+             */
+            setTimeout(function () {
+                self.cardList[0].classList.remove('open', 'show')
+                self.cardList[1].classList.remove('open', 'show')
+            }, 1000)
+
+            /**
+             * Set the event listener previously removed
+             */
+            self.cardList[0].addEventListener(self.event, self.showCard)
+            self.cardList[1].addEventListener(self.event, self.showCard)
+        }
+        setMoves()
+        cardList = []
+    }
 }
 
 /**

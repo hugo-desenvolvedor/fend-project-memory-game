@@ -51,6 +51,10 @@ h1 {
     margin: 0 0 3em;
 }
 
+.card:focus {
+    border: 3px solid white;
+}
+
 .deck .card {
     height: 125px;
     width: 125px;
